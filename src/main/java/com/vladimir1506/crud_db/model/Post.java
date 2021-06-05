@@ -19,8 +19,12 @@ public class Post {
         return "\n" + this.id + ". " + this.content + "\nДата создания: " + this.created + "\nДата изменения: " + this.updated;
     }
 
-    public String write() {
-        return this.id + ". " + this.content + " Дата создания: " + this.created + " Дата изменения: " + this.updated;
+    public Date getCreated() {
+        return created;
+    }
+
+    public Date getUpdated() {
+        return updated;
     }
 
     public Long getId() {
@@ -33,10 +37,6 @@ public class Post {
 
     public String getContent() {
         return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
     }
 
     public void setCreated(Date created) {

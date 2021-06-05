@@ -1,12 +1,16 @@
 package com.vladimir1506.crud_db.model;
 
 public class Region {
-    private final Long id;
-    private String name;
+    private Long id;
+    private final String name;
 
     public Region(Long id, String name) {
         this.id = id;
         this.name = name;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String toString() {

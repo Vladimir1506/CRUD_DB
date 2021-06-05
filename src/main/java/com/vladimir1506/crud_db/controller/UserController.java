@@ -5,13 +5,17 @@ import com.vladimir1506.crud_db.model.Region;
 import com.vladimir1506.crud_db.model.Role;
 import com.vladimir1506.crud_db.model.User;
 import com.vladimir1506.crud_db.repository.UserRepository;
+import com.vladimir1506.crud_db.repository.implementation.DBUserRepositoryImpl;
 
 
 import java.util.List;
 
 public class UserController {
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
+    public UserController() {
+        this.userRepository = new DBUserRepositoryImpl();
+    }
 
     public User createUser(String firstName, String lastName, List<Post> posts, Region region, Role role) {
         User user = new User(null, firstName, lastName, posts, region, role);
@@ -31,8 +35,8 @@ public class UserController {
         return userRepository.getById(id);
     }
 
-    public User updateUser(Long id, String firstName, String lastName, List<Post> posts, Region region, Role role) {
+    public void updateUser(Long id, String firstName, String lastName, List<Post> posts, Region region, Role role) {
         User updatedUser = new User(id, firstName, lastName, posts, region, role);
-        return userRepository.update(updatedUser);
+        userRepository.update(updatedUser);
     }
 }

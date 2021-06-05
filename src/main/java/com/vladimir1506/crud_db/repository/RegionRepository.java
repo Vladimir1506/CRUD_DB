@@ -6,9 +6,9 @@ import java.util.List;
 
 public interface RegionRepository extends GenericRepository<Region, Long> {
 
-    Region save(Region region);
-
     List<Region> getAll();
+
+    Region save(Region region);
 
     Region getById(Long id);
 

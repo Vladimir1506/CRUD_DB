@@ -11,7 +11,7 @@ public class RegionController {
     private final RegionRepository regionRepository;
 
     public RegionController() {
-        this.regionRepository =new DBRegionRepositoryImpl();
+        this.regionRepository = new DBRegionRepositoryImpl();
     }
 
     public Region createRegion(String name) {
@@ -31,12 +31,8 @@ public class RegionController {
         return regionRepository.getById(id);
     }
 
-    public Region getRegionByName(String name) {
-        return regionRepository.getByName(name);
-    }
-
-    public Region updateRegion(Long id, String name) {
+    public void updateRegion(Long id, String name) {
         Region updatedRegion = new Region(id, name);
-        return regionRepository.update(updatedRegion);
+        regionRepository.update(updatedRegion);
     }
 }

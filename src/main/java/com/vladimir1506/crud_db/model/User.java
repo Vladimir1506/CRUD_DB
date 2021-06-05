@@ -25,10 +25,6 @@ public class User {
         return role;
     }
 
-    public void setRole(Role role) {
-        this.role = role;
-    }
-
     public String toString() {
         String writePosts = null;
         String regionName = null;
@@ -54,24 +50,12 @@ public class User {
         return firstName;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
     public String getLastName() {
         return lastName;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
     public List<Post> getPosts() {
         return posts;
-    }
-
-    public void setPosts(List<Post> posts) {
-        this.posts = posts;
     }
 
     public Region getRegion() {
