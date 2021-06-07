@@ -34,9 +34,11 @@ public class DBUserRepositoryImpl implements UserRepository {
                 Long id = (long) resultSet.getInt("id");
                 String firstname = resultSet.getString("firstname");
                 String lastname = resultSet.getString("lastname");
-                String[] postsArray = resultSet.getString("posts").split(",");
-                for (String postId : postsArray) {
-                    posts.add(new DBPostRepositoryImpl().getById(Long.parseLong(postId)));
+                if (!resultSet.getString("posts").equals("null")) {
+                    String[] postsArray = resultSet.getString("posts").split(",");
+                    for (String postId : postsArray) {
+                        posts.add(new DBPostRepositoryImpl().getById(Long.parseLong(postId)));
+                    }
                 }
                 String regionString = resultSet.getString("region");
                 Region region = new DBRegionRepositoryImpl().getByName(regionString);
@@ -126,7 +128,8 @@ public class DBUserRepositoryImpl implements UserRepository {
     }
 
     private String getPostIds(User user) {
-        if (user.getPosts() != null) {
+        if (!user.getPosts().isEmpty()) {
+            System.out.println(user.getPosts());
             List<Long> posts = user.getPosts().stream().map(Post::getId).collect(Collectors.toList());
             return posts.toString().replaceAll("[ \\[\\]]", "");
         } else return null;

@@ -1,5 +1,8 @@
 package com.vladimir1506.crud_db.view;
 
+import com.vladimir1506.crud_db.model.Region;
+
+import java.util.List;
 import java.util.Scanner;
 
 public abstract class ViewAbstractClass {

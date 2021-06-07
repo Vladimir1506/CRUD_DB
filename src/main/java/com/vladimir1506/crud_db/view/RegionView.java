@@ -3,11 +3,12 @@ package com.vladimir1506.crud_db.view;
 import com.vladimir1506.crud_db.controller.RegionController;
 import com.vladimir1506.crud_db.model.Region;
 
+import java.util.List;
+
 public class RegionView extends ViewAbstractClass {
     private final RegionController regionController = new RegionController();
+    List<Region> regions;
 
-    public RegionView() {
-    }
 
     public void print() {
         System.out.println("Введите номер действия, которые желаете произвести:");
@@ -55,12 +56,15 @@ public class RegionView extends ViewAbstractClass {
     }
 
     public void getAll() {
-        System.out.println("Список регионов:");
-        System.out.println(regionController.getAll());
+        regions = regionController.getAll();
+        if (!regions.isEmpty()) {
+            System.out.println("Список регионов:");
+            System.out.println(regions);
+        } else System.out.println("Список регионов пуст");
     }
 
     public void delete() {
-        this.getAll();
+        if (isRegionsEmpty()) return;
         System.out.println("Введите id региона, который желаете удалить:");
         Long id = scanner().nextLong();
         Region deletedRegion = regionController.getRegionById(id);
@@ -70,6 +74,7 @@ public class RegionView extends ViewAbstractClass {
     }
 
     public void getById() {
+        if (isRegionsEmpty()) return;
         System.out.println("Введите id региона, который желаете получить:");
         Long id = scanner().nextLong();
         Region region = regionController.getRegionById(id);
@@ -77,11 +82,19 @@ public class RegionView extends ViewAbstractClass {
     }
 
     public void update() {
+        if (isRegionsEmpty()) return;
         System.out.println("Введите id региона, который хотите изменить:");
         Long id = scanner().nextLong();
         System.out.println("Введите новое название региона:");
         String name = scanner().nextLine();
         regionController.updateRegion(id, name);
         this.getAll();
+    }
+
+    private boolean isRegionsEmpty() {
+        if (regions.isEmpty()) {
+            getAll();
+            return true;
+        } else return false;
     }
 }

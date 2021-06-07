@@ -3,9 +3,12 @@ package com.vladimir1506.crud_db.view;
 import com.vladimir1506.crud_db.controller.PostController;
 import com.vladimir1506.crud_db.model.Post;
 
+import java.util.List;
+
 public class PostView extends ViewAbstractClass {
 
     private final PostController postController = new PostController();
+    List<Post> posts;
 
 
     protected void print() {
@@ -45,6 +48,15 @@ public class PostView extends ViewAbstractClass {
         }
     }
 
+    public void getAll() {
+        posts = postController.getAll();
+        if (!posts.isEmpty()) {
+            System.out.println("Список постов:");
+            System.out.println(posts);
+        } else System.out.println("Ни одного поста не создано");
+
+    }
+
     public void create() {
         System.out.println("Введите содержимое поста:");
         String postContent = scanner().nextLine();
@@ -52,12 +64,8 @@ public class PostView extends ViewAbstractClass {
         System.out.println("Вы добавили новый пост: " + post);
     }
 
-    public void getAll() {
-        System.out.println("Список постов:");
-        System.out.println(postController.getAll());
-    }
-
     public void delete() {
+        if (isPostsEmpty()) return;
         this.getAll();
         System.out.println("Введите id поста, который желаете удалить:");
         Long id = scanner().nextLong();
@@ -68,6 +76,7 @@ public class PostView extends ViewAbstractClass {
     }
 
     public void getById() {
+        if (isPostsEmpty()) return;
         System.out.println("Введите id поста, который желаете получить:");
         Long id = scanner().nextLong();
         Post post = postController.getPostById(id);
@@ -75,11 +84,19 @@ public class PostView extends ViewAbstractClass {
     }
 
     public void update() {
+        if (isPostsEmpty()) return;
         System.out.println("Введите id поста, содержимое которого хотите изменить:");
         Long id = scanner().nextLong();
         System.out.println("Введите новое содержимое поста:");
         String content = scanner().nextLine();
         postController.updatePost(id, content);
         this.getAll();
+    }
+
+    private boolean isPostsEmpty() {
+        if (posts.isEmpty()) {
+            getAll();
+            return true;
+        } else return false;
     }
 }

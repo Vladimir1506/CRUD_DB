@@ -8,13 +8,19 @@ import com.vladimir1506.crud_db.model.Region;
 import com.vladimir1506.crud_db.model.Role;
 import com.vladimir1506.crud_db.model.User;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class UserView extends ViewAbstractClass {
     private final UserController userController = new UserController();
+    List<User> users;
+    RegionController regionController = new RegionController();
+    PostController postController = new PostController();
+    List<Region> regions = regionController.getAll();
+    Region region;
+    List<Post> posts = postController.getAll();
+
 
     protected void print() {
         System.out.println("Введите номер действия, которые желаете произвести:");
@@ -53,36 +59,48 @@ public class UserView extends ViewAbstractClass {
         }
     }
 
+    public void getAll() {
+        users = userController.getAll();
+        if (!users.isEmpty()) {
+            System.out.println("Список пользователей:");
+            System.out.println(users);
+        } else System.out.println("Ни одного пользователя не создано");
+    }
+
     public void create() {
         System.out.println("Введите имя пользователя:");
         String userFName = scanner().nextLine();
         System.out.println("Введите фамилию пользователя:");
         String userLName = scanner().nextLine();
-        System.out.println("Введите список id постов пользователя через запятую (Например `1,2`:");
-        String post = scanner().nextLine();
-        List<Post> listOfPosts = new ArrayList<>();
-        for (String el : post.split(",")) {
-            Post postById = new PostController().getPostById(Long.parseLong(el));
-            listOfPosts.add(postById);
+        if (!posts.isEmpty()) {
+            System.out.println("Введите список id постов пользователя через запятую (Например `1,2`:");
+            String post = scanner().nextLine();
+            for (String el : post.split(",")) {
+                Post postById = postController.getPostById(Long.parseLong(el));
+                if (postById != null) {
+                    posts.add(postById);
+                }
+            }
         }
-        System.out.println("Выберите регион пользователя: ");
-        System.out.println(new RegionController().getAll());
-        Region region = new RegionController().getRegionById(Long.parseLong(scanner().nextLine()));
+
+        if (regions.isEmpty()) {
+            System.out.println("Список регионов пуст, введите название нового региона для этого пользователя:");
+            region = regionController.createRegion(scanner().nextLine());
+        } else {
+            System.out.println("Выберите регион пользователя:");
+            System.out.println(regions);
+            region = regionController.getRegionById(Long.parseLong(scanner().nextLine()));
+        }
         System.out.println("Введите роль пользователя из перечисленных вариантов");
         System.out.println(Arrays.toString(Role.values()));
-        Role role = Role.valueOf(scanner().nextLine());
-        User newUser = userController.createUser(userFName, userLName, listOfPosts, region, role);
+        Role role = Role.valueOf(scanner().nextLine().toUpperCase());
+        User newUser = userController.createUser(userFName, userLName, posts, region, role);
         System.out.println("Вы добавили нового пользователя:");
         System.out.println(newUser);
     }
 
-    public void getAll() {
-        System.out.println("Список пользователей:");
-        userController.getAll().forEach(System.out::println);
-    }
-
     public void delete() {
-        this.getAll();
+        if (isUsersEmpty()) return;
         System.out.println("Введите id пользователя, которого желаете удалить:");
         Long id = scanner().nextLong();
         User deletedUser = userController.getUserById(id);
@@ -92,6 +110,7 @@ public class UserView extends ViewAbstractClass {
     }
 
     public void getById() {
+        if (isUsersEmpty()) return;
         System.out.println("Введите id пользователя, который желаете получить:");
         Long id = scanner().nextLong();
         User user = userController.getUserById(id);
@@ -100,6 +119,7 @@ public class UserView extends ViewAbstractClass {
     }
 
     public void update() {
+        if (isUsersEmpty()) return;
         System.out.println("Введите id пользователя, которого хотите изменить:");
         Long id = scanner().nextLong();
         System.out.println("Введите новое имя пользователя:");
@@ -119,5 +139,12 @@ public class UserView extends ViewAbstractClass {
         Role role = Role.valueOf(scanner().nextLine());
         userController.updateUser(id, firstName, lastName, listOfPosts, region, role);
         this.getAll();
+    }
+
+    private boolean isUsersEmpty() {
+        if (users.isEmpty()) {
+            getAll();
+            return true;
+        } else return false;
     }
 }
