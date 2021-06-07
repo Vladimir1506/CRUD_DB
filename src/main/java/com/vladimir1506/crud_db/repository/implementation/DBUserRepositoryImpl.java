@@ -122,11 +122,13 @@ public class DBUserRepositoryImpl implements UserRepository {
     }
 
     private Long generateID(List<User> list) {
-        return list.stream().map(User::getId).max(Long::compare).orElse(null) + 1;
+        return list.stream().map(User::getId).max(Long::compare).orElse(0L) + 1;
     }
 
     private String getPostIds(User user) {
-        List<Long> posts = user.getPosts().stream().map(Post::getId).collect(Collectors.toList());
-        return posts.toString().replaceAll("[ \\[\\]]", "");
+        if (user.getPosts() != null) {
+            List<Long> posts = user.getPosts().stream().map(Post::getId).collect(Collectors.toList());
+            return posts.toString().replaceAll("[ \\[\\]]", "");
+        } else return null;
     }
 }

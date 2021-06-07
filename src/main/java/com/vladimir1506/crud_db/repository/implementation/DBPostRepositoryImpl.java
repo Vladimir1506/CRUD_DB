@@ -99,6 +99,6 @@ public class DBPostRepositoryImpl implements PostRepository {
     }
 
     private Long generateID(List<Post> list) {
-        return list.stream().map(Post::getId).max(Long::compare).orElse(null) + 1;
+        return list.stream().map(Post::getId).max(Long::compare).orElse(0L) + 1;
     }
 }

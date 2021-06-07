@@ -103,6 +103,6 @@ public class DBRegionRepositoryImpl implements RegionRepository {
     }
 
     private Long generateID(List<Region> list) {
-        return list.stream().map(Region::getId).max(Long::compare).orElse(null) + 1;
+        return list.stream().map(Region::getId).max(Long::compare).orElse(0L) + 1;
     }
 }
