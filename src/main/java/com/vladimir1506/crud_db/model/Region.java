@@ -2,7 +2,7 @@ package com.vladimir1506.crud_db.model;
 
 public class Region {
     private Long id;
-    private final String name;
+    private String name;
 
     public Region(Long id, String name) {
         this.id = id;
@@ -11,6 +11,10 @@ public class Region {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String toString() {
