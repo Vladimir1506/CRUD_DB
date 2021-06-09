@@ -86,7 +86,6 @@ public class DBRegionRepositoryImpl implements RegionRepository {
         }
     }
 
-    @Override
     public Region getByName(String name) {
         List<Region> regions;
         Region wantedRegion = null;
