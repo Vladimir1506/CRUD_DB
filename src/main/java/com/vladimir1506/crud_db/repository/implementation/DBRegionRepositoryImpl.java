@@ -8,20 +8,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DBRegionRepositoryImpl implements RegionRepository {
-    Connect connect;
-    Statement statement;
-    ResultSet resultSet;
-
-    public DBRegionRepositoryImpl() {
-        connect = new Connect();
-        statement = connect.getStatement();
-    }
 
     @Override
     public List<Region> getAll() {
         List<Region> regions = new ArrayList<>();
+        Connect connect = new Connect();
+        Statement statement = connect.getStatement();
         try {
-            resultSet = statement.executeQuery("select * from regions order by id asc");
+            ResultSet resultSet = statement.executeQuery("select * from regions order by id asc");
             while (resultSet.next()) {
                 Long id = (long) resultSet.getInt("id");
                 String name = resultSet.getString("name");
@@ -35,6 +29,8 @@ public class DBRegionRepositoryImpl implements RegionRepository {
 
     @Override
     public Region save(Region region) {
+        Connect connect = new Connect();
+        Statement statement = connect.getStatement();
         try {
             List<Region> regions = getAll();
             region = new Region(generateID(regions), region.getName());
@@ -66,6 +62,8 @@ public class DBRegionRepositoryImpl implements RegionRepository {
     @Override
     public Region update(Region region) {
         String updateQuery;
+        Connect connect = new Connect();
+        Statement statement = connect.getStatement();
         updateQuery = String.format("update regions set name='%s' where id=%d", region.getName(), region.getId());
         try {
             statement.execute(updateQuery);
@@ -78,6 +76,8 @@ public class DBRegionRepositoryImpl implements RegionRepository {
     @Override
     public void delete(Long id) {
         String deleteQuery;
+        Connect connect = new Connect();
+        Statement statement = connect.getStatement();
         deleteQuery = String.format("delete from regions where id=%d", id);
         try {
             statement.execute(deleteQuery);

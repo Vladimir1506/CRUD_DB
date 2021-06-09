@@ -14,21 +14,15 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class DBUserRepositoryImpl implements UserRepository {
-    Connect connect;
-    Statement statement;
-    ResultSet resultSet;
-
-    public DBUserRepositoryImpl() {
-        connect = new Connect();
-        statement = connect.getStatement();
-    }
 
     @Override
     public List<User> getAll() {
         List<User> users = new ArrayList<>();
         List<Post> posts;
+        Connect connect = new Connect();
+        Statement statement = connect.getStatement();
         try {
-            resultSet = statement.executeQuery("select * from users order by id asc");
+            ResultSet resultSet = statement.executeQuery("select * from users order by id asc");
             while (resultSet.next()) {
                 posts = new ArrayList<>();
                 Long id = (long) resultSet.getInt("id");
@@ -55,6 +49,8 @@ public class DBUserRepositoryImpl implements UserRepository {
 
     @Override
     public User save(User user) {
+        Connect connect = new Connect();
+        Statement statement = connect.getStatement();
         try {
             user.setId(generateID(getAll()));
             String saveQuery = String.format("insert into users values (%d,'%s','%s','%s','%s','%s')",
@@ -90,6 +86,8 @@ public class DBUserRepositoryImpl implements UserRepository {
     @Override
     public User update(User user) {
         String updateQuery;
+        Connect connect = new Connect();
+        Statement statement = connect.getStatement();
         updateQuery = String.format(
                 "update users set " +
                         "firstname='%s'," +
@@ -115,6 +113,8 @@ public class DBUserRepositoryImpl implements UserRepository {
     @Override
     public void delete(Long id) {
         String deleteQuery;
+        Connect connect = new Connect();
+        Statement statement = connect.getStatement();
         deleteQuery = String.format("delete from users where id=%d", id);
         try {
             statement.execute(deleteQuery);

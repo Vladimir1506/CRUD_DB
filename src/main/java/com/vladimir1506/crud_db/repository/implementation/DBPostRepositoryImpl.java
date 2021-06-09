@@ -12,20 +12,14 @@ import java.util.Date;
 import java.util.List;
 
 public class DBPostRepositoryImpl implements PostRepository {
-    Connect connect;
-    Statement statement;
-    ResultSet resultSet;
-
-    public DBPostRepositoryImpl() {
-        connect = new Connect();
-        statement = connect.getStatement();
-    }
 
     @Override
     public List<Post> getAll() {
         List<Post> posts = new ArrayList<>();
+        Connect connect = new Connect();
+        Statement statement = connect.getStatement();
         try {
-            resultSet = statement.executeQuery("select * from posts order by id asc");
+            ResultSet resultSet = statement.executeQuery("select * from posts order by id asc");
             while (resultSet.next()) {
                 Long id = (long) resultSet.getInt("id");
                 String content = resultSet.getString("content");
@@ -60,6 +54,8 @@ public class DBPostRepositoryImpl implements PostRepository {
 
     @Override
     public Post save(Post post) {
+        Connect connect = new Connect();
+        Statement statement = connect.getStatement();
         try {
             List<Post> posts = getAll();
             post = new Post(generateID(posts), post.getContent());
@@ -76,6 +72,8 @@ public class DBPostRepositoryImpl implements PostRepository {
     @Override
     public Post update(Post post) {
         String updateQuery;
+        Connect connect = new Connect();
+        Statement statement = connect.getStatement();
         post.setUpdated(new Date());
         String updated = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss").format(post.getUpdated());
         updateQuery = String.format("update posts set content='%s',updated='%s' where id=%d", post.getContent(), updated, post.getId());
@@ -90,6 +88,8 @@ public class DBPostRepositoryImpl implements PostRepository {
     @Override
     public void delete(Long id) {
         String deleteQuery;
+        Connect connect = new Connect();
+        Statement statement = connect.getStatement();
         deleteQuery = String.format("delete from posts where id=%d", id);
         try {
             statement.execute(deleteQuery);
