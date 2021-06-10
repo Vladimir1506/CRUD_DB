@@ -138,7 +138,7 @@ public class UserView extends ViewAbstractClass {
         Region region = new RegionController().getRegionById(Long.parseLong(scanner().nextLine()));
         System.out.println("Введите новую роль пользователя из перечисленных вариантов");
         System.out.println(Arrays.toString(Role.values()));
-        Role role = Role.valueOf(scanner().nextLine());
+        Role role = Role.valueOf(scanner().nextLine().toUpperCase());
         userController.updateUser(id, firstName, lastName, listOfPosts, region, role);
         this.getAll();
     }

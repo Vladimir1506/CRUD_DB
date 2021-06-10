@@ -11,32 +11,46 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class DBUserRepositoryImpl implements UserRepository {
+    private final String GETALL = "select u.id,u.firstname,u.lastname,r.id,r.name,u.role from users u " +
+            "left join regions r on u.id=r.id " +
+            "order by u.id asc";
+    private final String SAVEUSER = "insert into users values (%d,'%s','%s',%d,'%s')";
+    private final String SAVEPOST = "insert into user_post values (%d,%d)";
+    private final String UPDATEUSER = "update users set " +
+            "firstname='%s'," +
+            "lastname='%s'," +
+            "region_id=%d," +
+            "role='%s' " +
+            "where id=%d";
+    private final String DELETE = "delete from users where id=%d";
+    private final String GETPOSTS = "select user_id,post_id from user_post up " +
+            "left join users u on up.user_id=u.id " +
+            "left join posts p on up.post_id=p.id " +
+            "where up.user_id=%d";
 
     @Override
     public List<User> getAll() {
         List<Post> posts;
         List<User> users = new ArrayList<>();
-        Connect connect = new Connect();
-        Statement statement = connect.getStatement();
+        Statement statement = Connect.getStatement();
         try {
-            ResultSet resultSet = statement.executeQuery(
-                    "select u.id,u.firstname,u.lastname,r.id,r.name,u.role from users u " +
-                            "left join regions r on u.id=r.id " +
-                            "order by u.id asc");
+            ResultSet resultSet = statement.executeQuery(GETALL);
             while (resultSet.next()) {
                 Long id = (long) resultSet.getInt("u.id");
                 String firstname = resultSet.getString("u.firstname");
                 String lastname = resultSet.getString("u.lastname");
-                posts = getPostsByUserId(id);
                 Long regionId = resultSet.getLong("r.id");
                 String regionName = resultSet.getString("r.name");
                 Region region = new Region(regionId, regionName);
                 Role role = Role.valueOf(resultSet.getString("u.role"));
+                posts = null;
                 User user = new User(id, firstname, lastname, posts, region, role);
                 users.add(user);
+            }
+            for (User user : users) {
+                user.setPosts(getPostsByUserId(user.getId()));
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -46,24 +60,17 @@ public class DBUserRepositoryImpl implements UserRepository {
 
     @Override
     public User save(User user) {
-        Connect connect = new Connect();
-        Statement statement = connect.getStatement();
+        Statement statement = Connect.getStatement();
         try {
             user.setId(generateID(getAll()));
-            String saveQuery = String.format("insert into users values (%d,'%s','%s',%d,'%s')",
+            String saveQuery = String.format(SAVEUSER,
                     user.getId(),
                     user.getFirstName(),
                     user.getLastName(),
                     user.getRegion().getId(),
                     user.getRole().toString());
-            List<Post> posts = user.getPosts();
             statement.execute(saveQuery);
-            for (Post post :
-                    posts) {
-                String savePosts = String.format("insert into user_post values (%d,%d)", user.getId(), post.getId());
-                statement.execute(savePosts);
-            }
-
+            addposts(user);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
@@ -89,24 +96,17 @@ public class DBUserRepositoryImpl implements UserRepository {
     @Override
     public User update(User user) {
         String updateQuery;
-        Connect connect = new Connect();
-        Statement statement = connect.getStatement();
-        updateQuery = String.format(
-                "update users set " +
-                        "firstname='%s'," +
-                        "lastname='%s'," +
-                        "posts='%s'," +
-                        "region='%s'," +
-                        "role='%s' " +
-                        "where id=%d",
+        Statement statement = Connect.getStatement();
+        updateQuery = String.format(UPDATEUSER,
                 user.getFirstName(),
                 user.getLastName(),
-                this.getPostIds(user),
-                user.getRegion().getName(),
+                user.getRegion().getId(),
                 user.getRole().toString(),
                 user.getId());
         try {
             statement.execute(updateQuery);
+            addposts(user);
+
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
@@ -116,9 +116,8 @@ public class DBUserRepositoryImpl implements UserRepository {
     @Override
     public void delete(Long id) {
         String deleteQuery;
-        Connect connect = new Connect();
-        Statement statement = connect.getStatement();
-        deleteQuery = String.format("delete from users where id=%d", id);
+        Statement statement = Connect.getStatement();
+        deleteQuery = String.format(DELETE, id);
         try {
             statement.execute(deleteQuery);
         } catch (SQLException throwables) {
@@ -130,22 +129,11 @@ public class DBUserRepositoryImpl implements UserRepository {
         return list.stream().map(User::getId).max(Long::compare).orElse(0L) + 1;
     }
 
-    private String getPostIds(User user) {
-        if (!user.getPosts().isEmpty()) {
-            List<Long> posts = user.getPosts().stream().map(Post::getId).collect(Collectors.toList());
-            return posts.toString().replaceAll("[ \\[\\]]", "");
-        } else return null;
-    }
-
-    public List<Post> getPostsByUserId(Long userId) {
+    private List<Post> getPostsByUserId(Long userId) {
         List<Post> posts = new ArrayList<>();
-        Connect connect = new Connect();
-        Statement statement = connect.getStatement();
+        Statement statement = Connect.getStatement();
         String getPostsByUserIdQuery = String.format(
-                "select user_id,post_id from user_post up " +
-                        "left join users u on up.user_id=u.id " +
-                        "left join posts p on up.post_id=p.id " +
-                        "where up.user_id=%d", userId);
+                GETPOSTS, userId);
         try {
             ResultSet resultSet = statement.executeQuery(getPostsByUserIdQuery);
             while (resultSet.next()) {
@@ -156,5 +144,21 @@ public class DBUserRepositoryImpl implements UserRepository {
             throwables.printStackTrace();
         }
         return posts;
+    }
+
+    private void addposts(User user) {
+        Statement statement = Connect.getStatement();
+        List<Post> posts = user.getPosts();
+        if (!posts.isEmpty()) {
+            try {
+                for (Post post :
+                        posts) {
+                    String savePosts = String.format(SAVEPOST, user.getId(), post.getId());
+                    statement.execute(savePosts);
+                }
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+        }
     }
 }

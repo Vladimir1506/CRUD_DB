@@ -8,16 +8,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DBRegionRepositoryImpl implements RegionRepository {
+    private final String GETALL = "select * from regions r " +
+            "left join users u on r.id=u.region_id " +
+            "order by r.id asc";
+    private final String SAVE = "insert into regions (id,name) values (%d,'%s')";
+    private final String UPDATE = "update regions set name='%s' where id=%d";
+    private final String DELETE = "delete from regions where id=%d";
 
     @Override
     public List<Region> getAll() {
         List<Region> regions = new ArrayList<>();
-        Connect connect = new Connect();
-        Statement statement = connect.getStatement();
+        Statement statement = Connect.getStatement();
         try {
-            ResultSet resultSet = statement.executeQuery("select * from regions r " +
-                    "left join users u on r.id=u.region_id " +
-                    "order by r.id asc");
+            ResultSet resultSet = statement.executeQuery(GETALL);
             while (resultSet.next()) {
                 Long id = (long) resultSet.getInt("r.id");
                 String name = resultSet.getString("r.name");
@@ -31,13 +34,12 @@ public class DBRegionRepositoryImpl implements RegionRepository {
 
     @Override
     public Region save(Region region) {
-        Connect connect = new Connect();
-        Statement statement = connect.getStatement();
+        Statement statement = Connect.getStatement();
         try {
             List<Region> regions = getAll();
             region = new Region(generateID(regions), region.getName());
 
-            String saveQuery = String.format("insert into regions (id,name) values (%d,'%s')", region.getId(), region.getName());
+            String saveQuery = String.format(SAVE, region.getId(), region.getName());
             statement.execute(saveQuery);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -64,9 +66,8 @@ public class DBRegionRepositoryImpl implements RegionRepository {
     @Override
     public Region update(Region region) {
         String updateQuery;
-        Connect connect = new Connect();
-        Statement statement = connect.getStatement();
-        updateQuery = String.format("update regions set name='%s' where id=%d", region.getName(), region.getId());
+        Statement statement = Connect.getStatement();
+        updateQuery = String.format(UPDATE, region.getName(), region.getId());
         try {
             statement.execute(updateQuery);
         } catch (SQLException throwables) {
@@ -78,9 +79,8 @@ public class DBRegionRepositoryImpl implements RegionRepository {
     @Override
     public void delete(Long id) {
         String deleteQuery;
-        Connect connect = new Connect();
-        Statement statement = connect.getStatement();
-        deleteQuery = String.format("delete from regions where id=%d", id);
+        Statement statement = Connect.getStatement();
+        deleteQuery = String.format(DELETE, id);
         try {
             statement.execute(deleteQuery);
         } catch (SQLException throwables) {

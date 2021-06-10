@@ -62,7 +62,7 @@
             PRIMARY KEY (`user_id`,`post_id`),
             UNIQUE KEY `post_id_UNIQUE` (`post_id`),
             CONSTRAINT `postid` FOREIGN KEY (`post_id`) REFERENCES `posts` (`id`),
-            CONSTRAINT `userid` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
+            CONSTRAINT `userid` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
         </sql>
     </changeSet>

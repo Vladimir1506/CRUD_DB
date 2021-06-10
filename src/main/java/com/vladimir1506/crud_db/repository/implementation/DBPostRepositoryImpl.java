@@ -12,14 +12,17 @@ import java.util.Date;
 import java.util.List;
 
 public class DBPostRepositoryImpl implements PostRepository {
+    private final String GETALL = "select * from posts order by id asc";
+    private final String SAVE = "insert into posts values (%d,'%s','%s','%s')";
+    private final String UPDATE = "update posts set content='%s',updated='%s' where id=%d";
+    private final String DELETE = "delete from posts where id=%d";
 
     @Override
     public List<Post> getAll() {
         List<Post> posts = new ArrayList<>();
-        Connect connect = new Connect();
-        Statement statement = connect.getStatement();
+        Statement statement = Connect.getStatement();
         try {
-            ResultSet resultSet = statement.executeQuery("select * from posts order by id asc");
+            ResultSet resultSet = statement.executeQuery(GETALL);
             while (resultSet.next()) {
                 Long id = (long) resultSet.getInt("id");
                 String content = resultSet.getString("content");
@@ -54,14 +57,13 @@ public class DBPostRepositoryImpl implements PostRepository {
 
     @Override
     public Post save(Post post) {
-        Connect connect = new Connect();
-        Statement statement = connect.getStatement();
+        Statement statement = Connect.getStatement();
         try {
             List<Post> posts = getAll();
             post = new Post(generateID(posts), post.getContent());
             String created = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss").format(post.getCreated());
             String updated = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss").format(post.getUpdated());
-            String saveQuery = String.format("insert into posts values (%d,'%s','%s','%s')", post.getId(), post.getContent(), created, updated);
+            String saveQuery = String.format(SAVE, post.getId(), post.getContent(), created, updated);
             statement.execute(saveQuery);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -72,11 +74,10 @@ public class DBPostRepositoryImpl implements PostRepository {
     @Override
     public Post update(Post post) {
         String updateQuery;
-        Connect connect = new Connect();
-        Statement statement = connect.getStatement();
+        Statement statement = Connect.getStatement();
         post.setUpdated(new Date());
         String updated = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss").format(post.getUpdated());
-        updateQuery = String.format("update posts set content='%s',updated='%s' where id=%d", post.getContent(), updated, post.getId());
+        updateQuery = String.format(UPDATE, post.getContent(), updated, post.getId());
         try {
             statement.execute(updateQuery);
         } catch (SQLException throwables) {
@@ -88,9 +89,8 @@ public class DBPostRepositoryImpl implements PostRepository {
     @Override
     public void delete(Long id) {
         String deleteQuery;
-        Connect connect = new Connect();
-        Statement statement = connect.getStatement();
-        deleteQuery = String.format("delete from posts where id=%d", id);
+        Statement statement = Connect.getStatement();
+        deleteQuery = String.format(DELETE, id);
         try {
             statement.execute(deleteQuery);
         } catch (SQLException throwables) {

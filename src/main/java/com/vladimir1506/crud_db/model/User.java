@@ -25,6 +25,10 @@ public class User {
         return role;
     }
 
+    public void setPosts(List<Post> posts) {
+        this.posts = posts;
+    }
+
     public String toString() {
         String writePosts = null;
         String regionName = null;
