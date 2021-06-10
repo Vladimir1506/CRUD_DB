@@ -7,7 +7,7 @@ import java.util.List;
 
 public class RegionView extends ViewAbstractClass {
     private final RegionController regionController = new RegionController();
-    List<Region> regions;
+    List<Region> regions = regionController.getAll();
 
 
     public void print() {

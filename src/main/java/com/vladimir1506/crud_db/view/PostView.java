@@ -8,7 +8,7 @@ import java.util.List;
 public class PostView extends ViewAbstractClass {
 
     private final PostController postController = new PostController();
-    List<Post> posts;
+    List<Post> posts = postController.getAll();
 
 
     protected void print() {

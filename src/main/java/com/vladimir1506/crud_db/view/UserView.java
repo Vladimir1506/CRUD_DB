@@ -8,13 +8,14 @@ import com.vladimir1506.crud_db.model.Region;
 import com.vladimir1506.crud_db.model.Role;
 import com.vladimir1506.crud_db.model.User;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class UserView extends ViewAbstractClass {
     private final UserController userController = new UserController();
-    List<User> users;
+    List<User> users= userController.getAll();
     RegionController regionController = new RegionController();
     PostController postController = new PostController();
     List<Region> regions = regionController.getAll();
@@ -68,6 +69,7 @@ public class UserView extends ViewAbstractClass {
     }
 
     public void create() {
+        List<Post> userPosts = new ArrayList<>();
         System.out.println("Введите имя пользователя:");
         String userFName = scanner().nextLine();
         System.out.println("Введите фамилию пользователя:");
@@ -78,7 +80,7 @@ public class UserView extends ViewAbstractClass {
             for (String el : post.split(",")) {
                 Post postById = postController.getPostById(Long.parseLong(el));
                 if (postById != null) {
-                    posts.add(postById);
+                    userPosts.add(postById);
                 }
             }
         }
@@ -94,7 +96,7 @@ public class UserView extends ViewAbstractClass {
         System.out.println("Введите роль пользователя из перечисленных вариантов");
         System.out.println(Arrays.toString(Role.values()));
         Role role = Role.valueOf(scanner().nextLine().toUpperCase());
-        User newUser = userController.createUser(userFName, userLName, posts, region, role);
+        User newUser = userController.createUser(userFName, userLName, userPosts, region, role);
         System.out.println("Вы добавили нового пользователя:");
         System.out.println(newUser);
     }

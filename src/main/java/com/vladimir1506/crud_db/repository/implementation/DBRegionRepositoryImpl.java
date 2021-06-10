@@ -15,10 +15,12 @@ public class DBRegionRepositoryImpl implements RegionRepository {
         Connect connect = new Connect();
         Statement statement = connect.getStatement();
         try {
-            ResultSet resultSet = statement.executeQuery("select * from regions order by id asc");
+            ResultSet resultSet = statement.executeQuery("select * from regions r " +
+                    "left join users u on r.id=u.region_id " +
+                    "order by r.id asc");
             while (resultSet.next()) {
-                Long id = (long) resultSet.getInt("id");
-                String name = resultSet.getString("name");
+                Long id = (long) resultSet.getInt("r.id");
+                String name = resultSet.getString("r.name");
                 regions.add(new Region(id, name));
             }
         } catch (SQLException throwables) {
