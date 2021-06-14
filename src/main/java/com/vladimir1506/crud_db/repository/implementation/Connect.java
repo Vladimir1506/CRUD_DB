@@ -7,7 +7,6 @@ public class Connect {
     private static final String USERNAME = "rootroot";
     private static final String PASSWORD = "rootroot";
     private static final String DRIVER = "com.mysql.cj.jdbc.Driver";
-
     private static PreparedStatement statement;
 
     private Connect() {
