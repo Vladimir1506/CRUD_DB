@@ -18,9 +18,8 @@ public class DBRegionRepositoryImpl implements RegionRepository {
     @Override
     public List<Region> getAll() {
         List<Region> regions = new ArrayList<>();
-        Statement statement = Connect.getStatement();
         try {
-            ResultSet resultSet = statement.executeQuery(GETALL);
+            ResultSet resultSet = Connect.getStatement(GETALL).executeQuery();
             while (resultSet.next()) {
                 Long id = (long) resultSet.getInt("r.id");
                 String name = resultSet.getString("r.name");
@@ -34,13 +33,12 @@ public class DBRegionRepositoryImpl implements RegionRepository {
 
     @Override
     public Region save(Region region) {
-        Statement statement = Connect.getStatement();
         try {
             List<Region> regions = getAll();
             region = new Region(generateID(regions), region.getName());
 
             String saveQuery = String.format(SAVE, region.getId(), region.getName());
-            statement.execute(saveQuery);
+            Connect.getStatement(saveQuery).execute();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
@@ -66,10 +64,9 @@ public class DBRegionRepositoryImpl implements RegionRepository {
     @Override
     public Region update(Region region) {
         String updateQuery;
-        Statement statement = Connect.getStatement();
         updateQuery = String.format(UPDATE, region.getName(), region.getId());
         try {
-            statement.execute(updateQuery);
+            Connect.getStatement(updateQuery).execute();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
@@ -79,10 +76,9 @@ public class DBRegionRepositoryImpl implements RegionRepository {
     @Override
     public void delete(Long id) {
         String deleteQuery;
-        Statement statement = Connect.getStatement();
         deleteQuery = String.format(DELETE, id);
         try {
-            statement.execute(deleteQuery);
+            Connect.getStatement(deleteQuery).execute();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }

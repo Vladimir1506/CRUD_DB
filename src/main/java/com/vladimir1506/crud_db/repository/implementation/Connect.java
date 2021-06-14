@@ -8,18 +8,17 @@ public class Connect {
     private static final String PASSWORD = "rootroot";
     private static final String DRIVER = "com.mysql.cj.jdbc.Driver";
 
-    private static Connection connection;
-    private static Statement statement;
+    private static PreparedStatement statement;
 
     private Connect() {
     }
 
-    public static Statement getStatement() {
+    public static PreparedStatement getStatement(String sql) {
         if (statement == null) {
             try {
                 Class.forName(DRIVER);
-                connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
-                statement = connection.createStatement();
+                Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+                statement = connection.prepareStatement(sql);
             } catch (SQLException | ClassNotFoundException e) {
                 e.printStackTrace();
             }
