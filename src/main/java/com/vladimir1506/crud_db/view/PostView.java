@@ -8,7 +8,6 @@ import java.util.List;
 public class PostView extends ViewAbstractClass {
 
     private final PostController postController = new PostController();
-    List<Post> posts = postController.getAll();
 
 
     protected void print() {
@@ -49,7 +48,7 @@ public class PostView extends ViewAbstractClass {
     }
 
     public void getAll() {
-        posts = postController.getAll();
+        List<Post> posts = postController.getAll();
         if (!posts.isEmpty()) {
             System.out.println("Список постов:");
             System.out.println(posts);
@@ -94,6 +93,7 @@ public class PostView extends ViewAbstractClass {
     }
 
     private boolean isPostsEmpty() {
+        List<Post> posts = postController.getAll();
         if (posts.isEmpty()) {
             getAll();
             return true;

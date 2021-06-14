@@ -15,12 +15,8 @@ import java.util.stream.Collectors;
 
 public class UserView extends ViewAbstractClass {
     private final UserController userController = new UserController();
-    List<User> users= userController.getAll();
-    RegionController regionController = new RegionController();
-    PostController postController = new PostController();
-    List<Region> regions = regionController.getAll();
-    Region region;
-    List<Post> posts = postController.getAll();
+    private final RegionController regionController = new RegionController();
+    private final PostController postController = new PostController();
 
 
     protected void print() {
@@ -61,7 +57,7 @@ public class UserView extends ViewAbstractClass {
     }
 
     public void getAll() {
-        users = userController.getAll();
+        List<User> users = userController.getAll();
         if (!users.isEmpty()) {
             System.out.println("Список пользователей:");
             System.out.println(users);
@@ -69,11 +65,13 @@ public class UserView extends ViewAbstractClass {
     }
 
     public void create() {
+        Region region;
         List<Post> userPosts = new ArrayList<>();
         System.out.println("Введите имя пользователя:");
         String userFName = scanner().nextLine();
         System.out.println("Введите фамилию пользователя:");
         String userLName = scanner().nextLine();
+        List<Post> posts = postController.getAll();
         if (!posts.isEmpty()) {
             System.out.println("Введите список id постов пользователя через запятую (Например `1,2`:");
             String post = scanner().nextLine();
@@ -84,7 +82,7 @@ public class UserView extends ViewAbstractClass {
                 }
             }
         }
-
+        List<Region> regions = regionController.getAll();
         if (regions.isEmpty()) {
             System.out.println("Список регионов пуст, введите название нового региона для этого пользователя:");
             region = regionController.createRegion(scanner().nextLine());
@@ -144,6 +142,7 @@ public class UserView extends ViewAbstractClass {
     }
 
     private boolean isUsersEmpty() {
+        List<User> users = userController.getAll();
         if (users.isEmpty()) {
             getAll();
             return true;

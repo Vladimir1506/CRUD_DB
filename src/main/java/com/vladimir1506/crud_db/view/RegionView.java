@@ -7,7 +7,6 @@ import java.util.List;
 
 public class RegionView extends ViewAbstractClass {
     private final RegionController regionController = new RegionController();
-    List<Region> regions = regionController.getAll();
 
 
     public void print() {
@@ -56,7 +55,7 @@ public class RegionView extends ViewAbstractClass {
     }
 
     public void getAll() {
-        regions = regionController.getAll();
+        List<Region> regions = regionController.getAll();
         if (!regions.isEmpty()) {
             System.out.println("Список регионов:");
             System.out.println(regions);
@@ -92,6 +91,7 @@ public class RegionView extends ViewAbstractClass {
     }
 
     private boolean isRegionsEmpty() {
+        List<Region> regions = regionController.getAll();
         if (regions.isEmpty()) {
             getAll();
             return true;
