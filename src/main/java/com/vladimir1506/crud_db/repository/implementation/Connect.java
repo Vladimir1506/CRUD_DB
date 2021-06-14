@@ -7,21 +7,30 @@ public class Connect {
     private static final String USERNAME = "rootroot";
     private static final String PASSWORD = "rootroot";
     private static final String DRIVER = "com.mysql.cj.jdbc.Driver";
-    private static PreparedStatement statement;
+    private static Connection connection;
+    private static PreparedStatement preparedStatement;
 
     private Connect() {
     }
 
     public static PreparedStatement getStatement(String sql) {
-        if (statement == null) {
+        try {
+            preparedStatement = getConnection().prepareStatement(sql);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return preparedStatement;
+    }
+
+    private static Connection getConnection() {
+        if (connection == null) {
             try {
                 Class.forName(DRIVER);
-                Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
-                statement = connection.prepareStatement(sql);
+                connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
             } catch (SQLException | ClassNotFoundException e) {
                 e.printStackTrace();
             }
         }
-        return statement;
+        return connection;
     }
 }

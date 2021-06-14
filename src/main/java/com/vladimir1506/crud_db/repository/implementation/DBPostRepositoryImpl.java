@@ -13,9 +13,10 @@ import java.util.List;
 
 public class DBPostRepositoryImpl implements PostRepository {
     private final String GETALL = "select * from posts order by id asc";
-    private final String SAVE = "insert into posts values (%d,'%s','%s','%s')";
+    private final String SAVE = "insert into posts values ('%s','%s','%s')";
     private final String UPDATE = "update posts set content='%s',updated='%s' where id=%d";
     private final String DELETE = "delete from posts where id=%d";
+    private final String ID = "select last_insert_id()";
 
     @Override
     public List<Post> getAll() {
@@ -57,12 +58,11 @@ public class DBPostRepositoryImpl implements PostRepository {
     @Override
     public Post save(Post post) {
         try {
-            List<Post> posts = getAll();
-            post = new Post(generateID(posts), post.getContent());
             String created = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss").format(post.getCreated());
             String updated = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss").format(post.getUpdated());
-            String saveQuery = String.format(SAVE, post.getId(), post.getContent(), created, updated);
+            String saveQuery = String.format(SAVE, post.getContent(), created, updated);
             Connect.getStatement(saveQuery).execute();
+            post.setId(getLastId());
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
@@ -95,7 +95,16 @@ public class DBPostRepositoryImpl implements PostRepository {
         }
     }
 
-    private Long generateID(List<Post> list) {
-        return list.stream().map(Post::getId).max(Long::compare).orElse(0L) + 1;
+    public Long getLastId() {
+        Long lastId = null;
+        try {
+            ResultSet resultSet = Connect.getStatement(ID).executeQuery();
+            while (resultSet.next()) {
+                lastId = resultSet.getLong("last_insert_id()");
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return lastId;
     }
 }

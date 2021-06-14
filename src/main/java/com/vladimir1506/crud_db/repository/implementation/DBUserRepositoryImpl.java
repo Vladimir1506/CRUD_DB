@@ -16,7 +16,7 @@ public class DBUserRepositoryImpl implements UserRepository {
     private final String GETALL = "select u.id,u.firstname,u.lastname,r.id,r.name,u.role from users u " +
             "left join regions r on u.id=r.id " +
             "order by u.id asc";
-    private final String SAVEUSER = "insert into users values (%d,'%s','%s',%d,'%s')";
+    private final String SAVEUSER = "insert into users (firstname,lastname,region_id,role) values ('%s','%s',%d,'%s')";
     private final String SAVEPOST = "insert into user_post values (%d,%d)";
     private final String UPDATEUSER = "update users set " +
             "firstname='%s'," +
@@ -29,6 +29,7 @@ public class DBUserRepositoryImpl implements UserRepository {
             "left join users u on up.user_id=u.id " +
             "left join posts p on up.post_id=p.id " +
             "where up.user_id=%d";
+    private final String ID = "select last_insert_id()";
 
     @Override
     public List<User> getAll() {
@@ -59,14 +60,13 @@ public class DBUserRepositoryImpl implements UserRepository {
     @Override
     public User save(User user) {
         try {
-            user.setId(generateID(getAll()));
             String saveQuery = String.format(SAVEUSER,
-                    user.getId(),
                     user.getFirstName(),
                     user.getLastName(),
                     user.getRegion().getId(),
                     user.getRole().toString());
             Connect.getStatement(saveQuery).execute();
+            user.setId(getLastId());
             addposts(user);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -120,9 +120,6 @@ public class DBUserRepositoryImpl implements UserRepository {
         }
     }
 
-    private Long generateID(List<User> list) {
-        return list.stream().map(User::getId).max(Long::compare).orElse(0L) + 1;
-    }
 
     private List<Post> getPostsByUserId(Long userId) {
         List<Post> posts = new ArrayList<>();
@@ -153,5 +150,18 @@ public class DBUserRepositoryImpl implements UserRepository {
                 throwables.printStackTrace();
             }
         }
+    }
+
+    public Long getLastId() {
+        Long lastId = null;
+        try {
+            ResultSet resultSet = Connect.getStatement(ID).executeQuery();
+            while (resultSet.next()) {
+                lastId = resultSet.getLong("last_insert_id()");
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return lastId;
     }
 }

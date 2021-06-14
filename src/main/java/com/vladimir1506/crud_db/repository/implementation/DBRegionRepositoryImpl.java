@@ -11,9 +11,10 @@ public class DBRegionRepositoryImpl implements RegionRepository {
     private final String GETALL = "select * from regions r " +
             "left join users u on r.id=u.region_id " +
             "order by r.id asc";
-    private final String SAVE = "insert into regions (id,name) values (%d,'%s')";
+    private final String SAVE = "insert into regions (name) values ('%s')";
     private final String UPDATE = "update regions set name='%s' where id=%d";
     private final String DELETE = "delete from regions where id=%d";
+    private final String ID = "select last_insert_id()";
 
     @Override
     public List<Region> getAll() {
@@ -34,11 +35,9 @@ public class DBRegionRepositoryImpl implements RegionRepository {
     @Override
     public Region save(Region region) {
         try {
-            List<Region> regions = getAll();
-            region = new Region(generateID(regions), region.getName());
-
-            String saveQuery = String.format(SAVE, region.getId(), region.getName());
+            String saveQuery = String.format(SAVE, region.getName());
             Connect.getStatement(saveQuery).execute();
+            region.setId(getLastId());
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
@@ -85,9 +84,8 @@ public class DBRegionRepositoryImpl implements RegionRepository {
     }
 
     public Region getByName(String name) {
-        List<Region> regions;
         Region wantedRegion = null;
-        regions = getAll();
+        List<Region> regions = getAll();
         if (regions != null) {
             for (Region region : regions
             ) {
@@ -99,7 +97,16 @@ public class DBRegionRepositoryImpl implements RegionRepository {
         return wantedRegion;
     }
 
-    private Long generateID(List<Region> list) {
-        return list.stream().map(Region::getId).max(Long::compare).orElse(0L) + 1;
+    public Long getLastId() {
+        Long lastId = null;
+        try {
+            ResultSet resultSet = Connect.getStatement(ID).executeQuery();
+            while (resultSet.next()) {
+                lastId = resultSet.getLong("last_insert_id()");
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return lastId;
     }
 }
