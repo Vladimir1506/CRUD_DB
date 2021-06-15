@@ -1,0 +1,343 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="32f2fbf7-3105-4d65-90a3-856a238e5bcf" name="Default Changelist" comment="fixed .gitignore" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Interface" />
+        <option value="Class" />
+        <option value="JUnit4 Test Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="1tChyjRimtfVUBfLYX1EWQxqxRf" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="Downloaded.Files.Path.Enabled" value="false" />
+    <property name="Repository.Attach.Annotations" value="false" />
+    <property name="Repository.Attach.JavaDocs" value="false" />
+    <property name="Repository.Attach.Sources" value="false" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary" value="JUnit4" />
+    <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit4" value="" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../Patterns" />
+    <property name="project.structure.last.edited" value="Global Libraries" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.4024768" />
+    <property name="restartRequiresConfirmation" value="false" />
+    <property name="settings.editor.selected.configurable" value="vcs.Git" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\kuro4\IdeaProjects\CRUD_DB\src\main\java\com\vladimir1506\crud_db\controller" />
+      <recent name="C:\Users\kuro4\IdeaProjects\CRUD_DB\src\main\java\com\vladimir1506\crud_db\view" />
+      <recent name="C:\Users\kuro4\IdeaProjects\CRUD_DB\src\main\java\com\vladimir1506\crud_db\repository" />
+      <recent name="C:\Users\kuro4\IdeaProjects\CRUD_DB\src\main\java\com\vladimir1506\crud_db\model" />
+    </key>
+    <key name="CreateTestDialog.Recents.Supers">
+      <recent name="" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\kuro4\IdeaProjects\CRUD_DB" />
+    </key>
+    <key name="CreateTestDialog.RecentsKey">
+      <recent name="com.vladimir1506.crud_db.repository.implementation" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Application.Main">
+    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.vladimir1506.crud_db.Main" />
+      <module name="CRUD_DB" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.vladimir1506.crud_db.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="DBRegionRepositoryImplTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="CRUD_DB" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.vladimir1506.crud_db.repository.implementation.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.vladimir1506.crud_db.repository.implementation" />
+      <option name="MAIN_CLASS_NAME" value="com.vladimir1506.crud_db.repository.implementation.DBRegionRepositoryImplTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="DBRegionRepositoryImplTest.getByIdTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="CRUD_DB" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.vladimir1506.crud_db.repository.implementation.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.vladimir1506.crud_db.repository.implementation" />
+      <option name="MAIN_CLASS_NAME" value="com.vladimir1506.crud_db.repository.implementation.DBRegionRepositoryImplTest" />
+      <option name="METHOD_NAME" value="getByIdTest" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="DBRegionRepositoryImplTest.getByNameTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="CRUD_DB" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.vladimir1506.crud_db.repository.implementation.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.vladimir1506.crud_db.repository.implementation" />
+      <option name="MAIN_CLASS_NAME" value="com.vladimir1506.crud_db.repository.implementation.DBRegionRepositoryImplTest" />
+      <option name="METHOD_NAME" value="getByNameTest" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="DBRegionRepositoryImplTest.update" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="CRUD_DB" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.vladimir1506.crud_db.repository.implementation.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.vladimir1506.crud_db.repository.implementation" />
+      <option name="MAIN_CLASS_NAME" value="com.vladimir1506.crud_db.repository.implementation.DBRegionRepositoryImplTest" />
+      <option name="METHOD_NAME" value="update" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.Main" />
+        <item itemvalue="JUnit.DBRegionRepositoryImplTest" />
+        <item itemvalue="JUnit.DBRegionRepositoryImplTest.getByNameTest" />
+        <item itemvalue="JUnit.DBRegionRepositoryImplTest.update" />
+        <item itemvalue="JUnit.DBRegionRepositoryImplTest.getByIdTest" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="32f2fbf7-3105-4d65-90a3-856a238e5bcf" name="Default Changelist" comment="" />
+      <created>1622279235461</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1622279235461</updated>
+    </task>
+    <task id="LOCAL-00001" summary="add Region">
+      <created>1622659706961</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1622659706961</updated>
+    </task>
+    <task id="LOCAL-00002" summary="add Region, Post, User">
+      <created>1622698897024</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1622698897024</updated>
+    </task>
+    <task id="LOCAL-00003" summary="add Region, Post, User">
+      <created>1622699491076</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1622699491076</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Linked to DB">
+      <created>1622881166042</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1622881166042</updated>
+    </task>
+    <task id="LOCAL-00005" summary="add liquibase">
+      <created>1623041668659</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1623041668659</updated>
+    </task>
+    <task id="LOCAL-00006" summary="add Null-checking">
+      <created>1623083633763</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1623083633763</updated>
+    </task>
+    <task id="LOCAL-00007" summary="add Null-checking">
+      <created>1623083648384</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1623083648384</updated>
+    </task>
+    <task id="LOCAL-00008" summary="add DBRegionRepositoryImplTest">
+      <created>1623127086388</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1623127086388</updated>
+    </task>
+    <task id="LOCAL-00009" summary="generic-level exceptions are deleted&#10;repo-interfaces' bodies are cleaned">
+      <created>1623251371239</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1623251371239</updated>
+    </task>
+    <task id="LOCAL-00010" summary="statements and resultsets are moved to the methods">
+      <created>1623252101702</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1623252101702</updated>
+    </task>
+    <task id="LOCAL-00011" summary="'join'-uses are added">
+      <created>1623350200785</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1623350200785</updated>
+    </task>
+    <task id="LOCAL-00012" summary="Connect is static (Singleton)">
+      <created>1623354751065</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1623354751065</updated>
+    </task>
+    <task id="LOCAL-00013" summary="moved getAll() methods from views' constructors">
+      <created>1623671630265</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1623671630265</updated>
+    </task>
+    <task id="LOCAL-00014" summary="moved getAll() methods from views' constructors">
+      <created>1623671649364</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1623671649364</updated>
+    </task>
+    <task id="LOCAL-00015" summary="used preparedStatements instead of Statements">
+      <created>1623672939892</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1623672939892</updated>
+    </task>
+    <task id="LOCAL-00016" summary="used preparedStatements instead of Statements">
+      <created>1623673342856</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1623673342856</updated>
+    </task>
+    <task id="LOCAL-00017" summary="used preparedStatements instead of Statements">
+      <created>1623673351486</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1623673351486</updated>
+    </task>
+    <task id="LOCAL-00018" summary="fixed id generating">
+      <created>1623679268039</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1623679268039</updated>
+    </task>
+    <task id="LOCAL-00019" summary="fixed .gitignore">
+      <created>1623696308183</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1623696308183</updated>
+    </task>
+    <task id="LOCAL-00020" summary="fixed .gitignore">
+      <created>1623696461124</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1623696461124</updated>
+    </task>
+    <task id="LOCAL-00021" summary="fixed .gitignore">
+      <created>1623696550783</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1623696550783</updated>
+    </task>
+    <option name="localTasksCounter" value="22" />
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="add Region" />
+    <MESSAGE value="add Region, Post, User" />
+    <MESSAGE value="Linked to DB" />
+    <MESSAGE value="add liquibase" />
+    <MESSAGE value="add Null-checking" />
+    <MESSAGE value="add DBRegionRepositoryImplTest" />
+    <MESSAGE value="generic-level exceptions are deleted&#10;repo-interfaces' bodies are cleaned" />
+    <MESSAGE value="statements and resultsets are moved to the methods" />
+    <MESSAGE value="'join'-uses are added" />
+    <MESSAGE value="Connect is static (Singleton)" />
+    <MESSAGE value="moved getAll() methods from views' constructors" />
+    <MESSAGE value="used preparedStatements instead of Statements" />
+    <MESSAGE value="fixed id generating" />
+    <MESSAGE value="fixed .gitignore" />
+    <option name="LAST_COMMIT_MESSAGE" value="fixed .gitignore" />
+  </component>
+</project>
